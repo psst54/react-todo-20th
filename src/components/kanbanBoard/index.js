@@ -1,3 +1,4 @@
+import SubjectList from 'components/SubjectList';
 import { STATE_LIST } from './constants';
 import { ColumnTitle, ColumnContainer, Container, DivideLine } from './styles';
 
@@ -15,9 +16,10 @@ function Column({ state }) {
   const { id, title } = STATE_LIST[state];
 
   return (
-    <ColumnContainer id={`${id}-column`} $state={state}>
+    <ColumnContainer id={`${id}-column`} state={state}>
       <ColumnTitle>{title}</ColumnTitle>
-      <DivideLine $state={state} />
+      <DivideLine state={state} />
+      <SubjectList state={state} />
     </ColumnContainer>
   );
 }
