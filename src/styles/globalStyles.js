@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { COLORS } from './constants';
 
 const GlobalStyle = createGlobalStyle`
  /* 기본 margin, padding 제거 */
@@ -15,6 +16,15 @@ const GlobalStyle = createGlobalStyle`
   ol {
     list-style: none;
   }
+
+  * {
+    color: ${COLORS.TEXT.STANDARD};
+  }
+
+  body {
+    background-color: ${COLORS.BACKGROUND.STANDARD};
+  }
+
 `;
 
 export default GlobalStyle;
