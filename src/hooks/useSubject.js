@@ -37,7 +37,7 @@ export default function useSubject() {
         return {
           ...subject,
           taskList: newTaskList,
-          state: getState(newTaskList),
+          state: getStateByTaskList(newTaskList),
         };
       })
     );
@@ -57,7 +57,7 @@ export default function useSubject() {
         return {
           ...subject,
           taskList: newTaskList,
-          state: getState(newTaskList),
+          state: getStateByTaskList(newTaskList),
         };
       })
     );
@@ -79,7 +79,7 @@ export default function useSubject() {
         return {
           ...subject,
           taskList: newTaskList,
-          state: getState(newTaskList),
+          state: getStateByTaskList(newTaskList),
         };
       })
     );
@@ -93,7 +93,7 @@ export default function useSubject() {
   };
 }
 
-function getState(taskList) {
+function getStateByTaskList(taskList) {
   const doneTaskCount = taskList.filter((task) => task.isCompleted).length;
   const totalTaskCount = taskList.length;
 
