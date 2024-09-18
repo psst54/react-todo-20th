@@ -6,8 +6,6 @@ export const Container = styled.ul`
   gap: 1rem;
 `;
 
-export const NewSubjectFormWrapper = styled.li``;
-
 export const NewSubjectForm = styled.form``;
 
 export const Input = styled.input``;

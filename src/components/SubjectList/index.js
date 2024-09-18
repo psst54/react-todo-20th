@@ -1,31 +1,46 @@
 import { useRef } from 'react';
 
 import { OPEN } from 'components/kanbanBoard/constants';
-import {
-  Container,
-  Input,
-  NewSubjectForm,
-  NewSubjectFormWrapper,
-} from './styles';
+import Subject from 'components/Subject';
+import useSubject from 'hooks/useSubject';
+import AddIcon from 'assets/AddIcon';
+import { Container, Input, NewSubjectForm } from './styles';
+import { Container as SubjectContainer } from 'components/Subject/styles';
 
 export default function SubjectList({ state }) {
-  return <Container>{state === OPEN && <SubjectInput />}</Container>;
+  const { subjectList, addSubject } = useSubject();
+
+  return (
+    <Container>
+      {state === OPEN && <SubjectInput addSubject={addSubject} />}
+      {subjectList.map((subject) => (
+        <Subject subject={subject} />
+      ))}
+    </Container>
+  );
 }
 
-function SubjectInput() {
+function SubjectInput({ addSubject }) {
   const inputRef = useRef(null);
 
   return (
-    <NewSubjectFormWrapper>
+    <SubjectContainer>
       <NewSubjectForm
         onSubmit={(event) => {
           event.preventDefault();
-          // console.log(inputRef.current.value);
+          addSubject(inputRef.current.value);
+          inputRef.current.value = '';
         }}
       >
-        <Input ref={inputRef} />
-        <button>추가</button>
+        <Input
+          ref={inputRef}
+          type="text"
+          placeholder="새로운 목표를 입력해주세요"
+        />
+        <button>
+          <AddIcon />
+        </button>
       </NewSubjectForm>
-    </NewSubjectFormWrapper>
+    </SubjectContainer>
   );
 }

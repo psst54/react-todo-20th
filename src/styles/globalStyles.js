@@ -25,6 +25,28 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${COLORS.BACKGROUND.STANDARD};
   }
 
+  form {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  input[type="text"] {
+    flex: 1;
+
+    background: transparent;
+
+    border: none;
+    border-bottom: 1px solid ${COLORS.BORDER.STANDARD};
+    outline: none;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyle;
