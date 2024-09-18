@@ -1,13 +1,14 @@
 import { useRef } from 'react';
 
 import { OPEN } from 'components/kanbanBoard/constants';
+import Subject from 'components/Subject';
+import useSubject from 'hooks/useSubject';
 import {
   Container,
   Input,
   NewSubjectForm,
   NewSubjectFormWrapper,
 } from './styles';
-import useSubject from 'hooks/useSubject';
 
 export default function SubjectList({ state }) {
   const { subjectList, addSubject } = useSubject();
@@ -16,7 +17,7 @@ export default function SubjectList({ state }) {
     <Container>
       {state === OPEN && <SubjectInput addSubject={addSubject} />}
       {subjectList.map((subject) => (
-        <div>{subject.title}</div>
+        <Subject subject={subject} />
       ))}
     </Container>
   );

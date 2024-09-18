@@ -5,5 +5,11 @@ export const COLORS = {
 
   BACKGROUND: {
     STANDARD: '#121212',
+    CARD: '#121212ee',
+  },
+
+  BORDER: {
+    STANDARD: '#ffffff',
+    CARD: '#404040',
   },
 };

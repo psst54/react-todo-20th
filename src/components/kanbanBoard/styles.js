@@ -22,7 +22,7 @@ export const ColumnContainer = styled.section`
   height: fit-content;
   padding: 1rem;
   background: ${(props) => COLOR[props.state].background};
-  border: 3px solid ${(props) => COLOR[props.state].border};
+  border: 2px solid ${(props) => COLOR[props.state].border};
   border-radius: 1rem;
 `;
 
