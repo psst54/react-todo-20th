@@ -2,24 +2,25 @@ import { useRef } from 'react';
 
 import { OPEN } from 'components/kanbanBoard/constants';
 import Subject from 'components/Subject';
-import useSubject from 'hooks/useSubject';
 import AddIcon from 'assets/AddIcon';
 import { Container, Input, NewSubjectForm } from './styles';
 import { Container as SubjectContainer } from 'components/Subject/styles';
 
-export default function SubjectList({ state }) {
-  const { subjectList, addSubject, deleteSubject } = useSubject();
+export default function SubjectList({ state, subjectHooks }) {
+  const { subjectList, addSubject, deleteSubject } = subjectHooks;
 
   return (
     <Container>
       {state === OPEN && <SubjectInput addSubject={addSubject} />}
-      {subjectList.map((subject) => (
-        <Subject
-          key={subject.id}
-          subject={subject}
-          deleteSubject={deleteSubject}
-        />
-      ))}
+      {subjectList
+        .filter((subject) => state === subject.state)
+        .map((subject) => (
+          <Subject
+            key={subject.id}
+            subject={subject}
+            deleteSubject={deleteSubject}
+          />
+        ))}
     </Container>
   );
 }

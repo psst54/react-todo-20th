@@ -1,3 +1,4 @@
+import { OPEN } from 'components/kanbanBoard/constants';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,6 +10,7 @@ export default function useSubject() {
       id: uuidv4(),
       title: newSubjectTitle,
       taskList: [],
+      state: OPEN,
     };
     setSubjectList([...subjectList, newSubject]);
   }
