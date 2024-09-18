@@ -1,6 +1,6 @@
-import { OPEN } from 'components/kanbanBoard/constants';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { DONE, IN_PROGRESS, OPEN } from 'components/kanbanBoard/constants';
 
 export default function useSubject() {
   const [subjectList, setSubjectList] = useState([]);
@@ -27,24 +27,61 @@ export default function useSubject() {
     };
 
     setSubjectList(
-      subjectList.map((subject) =>
-        subject.id === subjectId
-          ? { ...subject, taskList: [...subject.taskList, newTask] }
-          : subject
-      )
+      subjectList.map((subject) => {
+        if (subject.id !== subjectId) {
+          return subject;
+        }
+
+        const newTaskList = [...subject.taskList, newTask];
+
+        return {
+          ...subject,
+          taskList: newTaskList,
+          state: getStateByTaskList(newTaskList),
+        };
+      })
     );
   }
 
   function deleteTaskFromSubject(subjectId, taskId) {
+    setSubjectList((subjectList) =>
+      subjectList.map((subject) => {
+        if (subject.id !== subjectId) {
+          return subject;
+        }
+
+        const newTaskList = subject.taskList.filter(
+          (task) => task.id !== taskId
+        );
+
+        return {
+          ...subject,
+          taskList: newTaskList,
+          state: getStateByTaskList(newTaskList),
+        };
+      })
+    );
+  }
+
+  function toggleTaskInSubject(subjectId, taskId) {
     setSubjectList(
-      subjectList.map((subject) =>
-        subject.id === subjectId
-          ? {
-              ...subject,
-              taskList: subject.taskList.filter((task) => task.id !== taskId),
-            }
-          : subject
-      )
+      subjectList.map((subject) => {
+        if (subject.id !== subjectId) {
+          return subject;
+        }
+
+        const newTaskList = subject.taskList.map((task) =>
+          task.id === taskId
+            ? { ...task, isCompleted: !task.isCompleted }
+            : task
+        );
+
+        return {
+          ...subject,
+          taskList: newTaskList,
+          state: getStateByTaskList(newTaskList),
+        };
+      })
     );
   }
 
@@ -52,6 +89,19 @@ export default function useSubject() {
     subjectList,
     addSubject,
     deleteSubject,
-    taskHooks: { addTaskToSubject, deleteTaskFromSubject },
+    taskHooks: { addTaskToSubject, deleteTaskFromSubject, toggleTaskInSubject },
   };
+}
+
+function getStateByTaskList(taskList) {
+  const doneTaskCount = taskList.filter((task) => task.isCompleted).length;
+  const totalTaskCount = taskList.length;
+
+  if (doneTaskCount === 0) {
+    return OPEN;
+  }
+  if (doneTaskCount === totalTaskCount) {
+    return DONE;
+  }
+  return IN_PROGRESS;
 }
