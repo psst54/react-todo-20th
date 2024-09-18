@@ -1,6 +1,6 @@
-export const OPEN = 'open';
-export const IN_PROGRESS = 'in-progress';
-export const DONE = 'done';
+export const OPEN = 'OPEN';
+export const IN_PROGRESS = 'IN_PROGRESS';
+export const DONE = 'DONE';
 
 export const STATE_LIST = Object.freeze({
   [OPEN]: {
@@ -14,20 +14,5 @@ export const STATE_LIST = Object.freeze({
   [DONE]: {
     title: 'Done',
     id: 'done',
-  },
-});
-
-export const COLOR = Object.freeze({
-  [OPEN]: {
-    background: '#31627e1a',
-    border: '#0d5580',
-  },
-  [IN_PROGRESS]: {
-    background: '#7267451a',
-    border: '#785e17',
-  },
-  [DONE]: {
-    background: '#2a5f2d1a',
-    border: '#0b5c18',
   },
 });
