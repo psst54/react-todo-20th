@@ -1,6 +1,7 @@
 export const COLORS = {
   TEXT: {
     STANDARD: '#ffffff',
+    DANGER: '#ff0000',
   },
 
   BACKGROUND: {

@@ -2,7 +2,7 @@ import { COLORS } from 'styles/constants';
 
 export default function DeleteIcon({
   size = '1.5rem',
-  color = COLORS.TEXT.STANDARD,
+  color = COLORS.TEXT.DANGER,
 }) {
   return (
     <svg
