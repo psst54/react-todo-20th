@@ -10,6 +10,9 @@ export const Container = styled.li`
   border-radius: 1rem;
 `;
 
-export const Header = styled.header``;
+export const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export const Title = styled.h3``;

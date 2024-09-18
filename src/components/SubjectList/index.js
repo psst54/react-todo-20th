@@ -8,13 +8,17 @@ import { Container, Input, NewSubjectForm } from './styles';
 import { Container as SubjectContainer } from 'components/Subject/styles';
 
 export default function SubjectList({ state }) {
-  const { subjectList, addSubject } = useSubject();
+  const { subjectList, addSubject, deleteSubject } = useSubject();
 
   return (
     <Container>
       {state === OPEN && <SubjectInput addSubject={addSubject} />}
       {subjectList.map((subject) => (
-        <Subject subject={subject} />
+        <Subject
+          key={subject.id}
+          subject={subject}
+          deleteSubject={deleteSubject}
+        />
       ))}
     </Container>
   );
