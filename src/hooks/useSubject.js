@@ -19,11 +19,17 @@ export default function useSubject() {
     setSubjectList(subjectList.filter((subject) => subject.id !== subjectId));
   }
 
-  function addTaskToSubject(subjectId, newTask) {
+  function addTaskToSubject(subjectId, newTaskTitle) {
+    const newTask = {
+      id: uuidv4(),
+      title: newTaskTitle,
+      isCompleted: false,
+    };
+
     setSubjectList(
       subjectList.map((subject) =>
         subject.id === subjectId
-          ? { ...subject, tasks: [...subject.tasks, newTask] }
+          ? { ...subject, taskList: [...subject.taskList, newTask] }
           : subject
       )
     );

@@ -13,7 +13,11 @@ export default function Subject({ subject, deleteSubject, taskHooks }) {
         </button>
       </Header>
 
-      <TaskList taskList={subject.taskList} taskHooks={taskHooks} />
+      <TaskList
+        subjectId={subject.id}
+        taskList={subject.taskList}
+        taskHooks={taskHooks}
+      />
     </Container>
   );
 }

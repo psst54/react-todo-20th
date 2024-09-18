@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { OPEN } from 'components/kanbanBoard/constants';
 import Subject from 'components/Subject';
 import AddIcon from 'assets/AddIcon';
-import { Container, Input, NewSubjectForm } from './styles';
+import { Container } from './styles';
 import { Container as SubjectContainer } from 'components/Subject/styles';
 
 export default function SubjectList({ state, subjectHooks }) {
@@ -31,14 +31,14 @@ function SubjectInput({ addSubject }) {
 
   return (
     <SubjectContainer>
-      <NewSubjectForm
+      <form
         onSubmit={(event) => {
           event.preventDefault();
           addSubject(inputRef.current.value);
           inputRef.current.value = '';
         }}
       >
-        <Input
+        <input
           ref={inputRef}
           type="text"
           placeholder="새로운 목표를 입력해주세요"
@@ -46,7 +46,7 @@ function SubjectInput({ addSubject }) {
         <button>
           <AddIcon />
         </button>
-      </NewSubjectForm>
+      </form>
     </SubjectContainer>
   );
 }
