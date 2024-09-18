@@ -29,15 +29,19 @@ export default function SubjectList({ state, subjectHooks }) {
 function SubjectInput({ addSubject }) {
   const inputRef = useRef(null);
 
+  function onAdd(event) {
+    event.preventDefault();
+    if (!inputRef.current.value) {
+      alert('목표를 입력해주세요!');
+      return;
+    }
+    addSubject(inputRef.current.value);
+    inputRef.current.value = '';
+  }
+
   return (
     <SubjectContainer>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          addSubject(inputRef.current.value);
-          inputRef.current.value = '';
-        }}
-      >
+      <form onSubmit={onAdd}>
         <input
           ref={inputRef}
           type="text"

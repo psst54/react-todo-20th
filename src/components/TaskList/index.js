@@ -27,14 +27,18 @@ export default function TaskList({ subjectId, taskList, taskHooks }) {
 function TaskInput({ subjectId, addTaskToSubject }) {
   const inputRef = useRef(null);
 
+  function onAdd(event) {
+    event.preventDefault();
+    if (!inputRef.current.value) {
+      alert('할 일을 입력해주세요!');
+      return;
+    }
+    addTaskToSubject(subjectId, inputRef.current.value);
+    inputRef.current.value = '';
+  }
+
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        addTaskToSubject(subjectId, inputRef.current.value);
-        inputRef.current.value = '';
-      }}
-    >
+    <form onSubmit={onAdd}>
       <input
         ref={inputRef}
         type="text"

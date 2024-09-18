@@ -7,23 +7,22 @@ export default function Task({
   deleteTaskFromSubject,
   toggleTaskInSubject,
 }) {
+  function onToggle() {
+    toggleTaskInSubject(subjectId, task.id);
+  }
+
+  function onDelete() {
+    if (!window.confirm('정말로 삭제하시겠습니까?')) {
+      return;
+    }
+    deleteTaskFromSubject(subjectId, task.id);
+  }
+
   return (
     <Container key={task.id}>
-      <input
-        type="checkbox"
-        checked={task.isCompleted}
-        onChange={() => {
-          toggleTaskInSubject(subjectId, task.id);
-        }}
-      />
+      <input type="checkbox" checked={task.isCompleted} onChange={onToggle} />
       <Title>{task.title}</Title>
-      <Button
-        onClick={() => {
-          deleteTaskFromSubject(subjectId, task.id);
-        }}
-      >
-        제거
-      </Button>
+      <Button onClick={onDelete}>제거</Button>
     </Container>
   );
 }

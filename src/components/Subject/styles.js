@@ -15,4 +15,8 @@ export const Header = styled.header`
   justify-content: space-between;
 `;
 
-export const Title = styled.h3``;
+export const TaskCount = styled.span`
+  color: ${COLORS.TEXT.DARK};
+  font-weight: 100;
+  font-size: 0.8rem;
+`;
