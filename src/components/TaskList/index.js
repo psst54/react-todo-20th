@@ -3,7 +3,7 @@ import { Button, Container } from './styles';
 import Task from 'components/Task';
 
 export default function TaskList({ subjectId, taskList, taskHooks }) {
-  const { addTaskToSubject } = taskHooks;
+  const { addTaskToSubject, deleteTaskFromSubject } = taskHooks;
 
   return (
     <Container>
@@ -12,7 +12,11 @@ export default function TaskList({ subjectId, taskList, taskHooks }) {
       </li>
 
       {taskList.map((task) => (
-        <Task task={task} />
+        <Task
+          subjectId={subjectId}
+          task={task}
+          deleteTaskFromSubject={deleteTaskFromSubject}
+        />
       ))}
     </Container>
   );
