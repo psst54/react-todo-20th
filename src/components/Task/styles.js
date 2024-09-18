@@ -5,3 +5,7 @@ export const Container = styled.li`
   align-items: center;
   gap: 0.5rem;
 `;
+
+export const Title = styled.p`
+  flex: 1;
+`;

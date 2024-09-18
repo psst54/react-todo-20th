@@ -35,10 +35,23 @@ export default function useSubject() {
     );
   }
 
+  function deleteTaskFromSubject(subjectId, taskId) {
+    setSubjectList(
+      subjectList.map((subject) =>
+        subject.id === subjectId
+          ? {
+              ...subject,
+              taskList: subject.taskList.filter((task) => task.id !== taskId),
+            }
+          : subject
+      )
+    );
+  }
+
   return {
     subjectList,
     addSubject,
     deleteSubject,
-    taskHooks: { addTaskToSubject },
+    taskHooks: { addTaskToSubject, deleteTaskFromSubject },
   };
 }
