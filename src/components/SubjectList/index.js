@@ -7,7 +7,7 @@ import { Container, Input, NewSubjectForm } from './styles';
 import { Container as SubjectContainer } from 'components/Subject/styles';
 
 export default function SubjectList({ state, subjectHooks }) {
-  const { subjectList, addSubject, deleteSubject } = subjectHooks;
+  const { subjectList, addSubject, deleteSubject, taskHooks } = subjectHooks;
 
   return (
     <Container>
@@ -19,6 +19,7 @@ export default function SubjectList({ state, subjectHooks }) {
             key={subject.id}
             subject={subject}
             deleteSubject={deleteSubject}
+            taskHooks={taskHooks}
           />
         ))}
     </Container>

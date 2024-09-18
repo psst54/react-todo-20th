@@ -19,5 +19,20 @@ export default function useSubject() {
     setSubjectList(subjectList.filter((subject) => subject.id !== subjectId));
   }
 
-  return { subjectList, addSubject, deleteSubject };
+  function addTaskToSubject(subjectId, newTask) {
+    setSubjectList(
+      subjectList.map((subject) =>
+        subject.id === subjectId
+          ? { ...subject, tasks: [...subject.tasks, newTask] }
+          : subject
+      )
+    );
+  }
+
+  return {
+    subjectList,
+    addSubject,
+    deleteSubject,
+    taskHooks: { addTaskToSubject },
+  };
 }
