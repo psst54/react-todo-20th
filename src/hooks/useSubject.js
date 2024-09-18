@@ -36,32 +36,38 @@ export default function useSubject() {
   }
 
   function deleteTaskFromSubject(subjectId, taskId) {
-    setSubjectList(
-      subjectList.map((subject) =>
-        subject.id === subjectId
-          ? {
-              ...subject,
-              taskList: subject.taskList.filter((task) => task.id !== taskId),
-            }
-          : subject
-      )
+    setSubjectList((subjectList) =>
+      subjectList.map((subject) => {
+        if (subject.id !== subjectId) {
+          return subject;
+        }
+
+        return {
+          ...subject,
+          taskList: subject.taskList.filter((task) => task.id !== taskId),
+        };
+      })
     );
   }
 
   function toggleTaskInSubject(subjectId, taskId) {
     setSubjectList(
-      subjectList.map((subject) =>
-        subject.id === subjectId
-          ? {
-              ...subject,
-              taskList: subject.taskList.map((task) =>
-                task.id === taskId
-                  ? { ...task, isCompleted: !task.isCompleted }
-                  : task
-              ),
-            }
-          : subject
-      )
+      subjectList.map((subject) => {
+        if (subject.id !== subjectId) {
+          return subject;
+        }
+
+        const newTaskList = subject.taskList.map((task) =>
+          task.id === taskId
+            ? { ...task, isCompleted: !task.isCompleted }
+            : task
+        );
+
+        return {
+          ...subject,
+          taskList: newTaskList,
+        };
+      })
     );
   }
 
