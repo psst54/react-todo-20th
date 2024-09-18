@@ -1,7 +1,13 @@
 import SubjectList from 'components/SubjectList';
 import useSubject from 'hooks/useSubject';
 import { STATE_LIST } from './constants';
-import { ColumnTitle, ColumnContainer, Container, DivideLine } from './styles';
+import {
+  ColumnContainer,
+  ColumnHeader,
+  Container,
+  DivideLine,
+  SubjectCount,
+} from './styles';
 
 export default function KanbanBoard() {
   const subjectHooks = useSubject();
@@ -17,10 +23,18 @@ export default function KanbanBoard() {
 
 function Column({ state, subjectHooks }) {
   const { id, title } = STATE_LIST[state];
+  const { subjectList } = subjectHooks;
+  const subjectCount = subjectList.filter(
+    (subject) => subject.state === state
+  ).length;
 
   return (
     <ColumnContainer id={`${id}-column`} state={state}>
-      <ColumnTitle>{title}</ColumnTitle>
+      <ColumnHeader>
+        <h2>{title}</h2>
+        <SubjectCount state={state}>{subjectCount}</SubjectCount>
+      </ColumnHeader>
+
       <DivideLine state={state} />
       <SubjectList state={state} subjectHooks={subjectHooks} />
     </ColumnContainer>

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { COLOR } from './constants';
+import { COLORS } from 'styles/constants';
 
 export const Container = styled.main`
   display: flex;
@@ -26,7 +27,22 @@ export const ColumnContainer = styled.section`
   border-radius: 1rem;
 `;
 
-export const ColumnTitle = styled.h2``;
+export const ColumnHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const SubjectCount = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2rem;
+  height: 2rem;
+  background: ${(props) => COLOR[props.state].border};
+  border-radius: 1rem;
+`;
 
 export const DivideLine = styled.hr`
   border: 1px solid ${(props) => COLOR[props.state].border};

@@ -2,6 +2,7 @@ export const COLORS = {
   TEXT: {
     STANDARD: '#ffffff',
     DANGER: '#ff0000',
+    DARK: '#000000',
   },
 
   BACKGROUND: {
