@@ -1,6 +1,6 @@
 export const OPEN = 'open';
-const IN_PROGRESS = 'in-progress';
-const DONE = 'done';
+export const IN_PROGRESS = 'in-progress';
+export const DONE = 'done';
 
 export const STATE_LIST = Object.freeze({
   [OPEN]: {

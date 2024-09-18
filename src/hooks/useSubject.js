@@ -1,6 +1,6 @@
-import { OPEN } from 'components/kanbanBoard/constants';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { DONE, IN_PROGRESS, OPEN } from 'components/kanbanBoard/constants';
 
 export default function useSubject() {
   const [subjectList, setSubjectList] = useState([]);
@@ -27,11 +27,19 @@ export default function useSubject() {
     };
 
     setSubjectList(
-      subjectList.map((subject) =>
-        subject.id === subjectId
-          ? { ...subject, taskList: [...subject.taskList, newTask] }
-          : subject
-      )
+      subjectList.map((subject) => {
+        if (subject.id !== subjectId) {
+          return subject;
+        }
+
+        const newTaskList = [...subject.taskList, newTask];
+
+        return {
+          ...subject,
+          taskList: newTaskList,
+          state: getState(newTaskList),
+        };
+      })
     );
   }
 
@@ -42,9 +50,14 @@ export default function useSubject() {
           return subject;
         }
 
+        const newTaskList = subject.taskList.filter(
+          (task) => task.id !== taskId
+        );
+
         return {
           ...subject,
-          taskList: subject.taskList.filter((task) => task.id !== taskId),
+          taskList: newTaskList,
+          state: getState(newTaskList),
         };
       })
     );
@@ -66,6 +79,7 @@ export default function useSubject() {
         return {
           ...subject,
           taskList: newTaskList,
+          state: getState(newTaskList),
         };
       })
     );
@@ -77,4 +91,17 @@ export default function useSubject() {
     deleteSubject,
     taskHooks: { addTaskToSubject, deleteTaskFromSubject, toggleTaskInSubject },
   };
+}
+
+function getState(taskList) {
+  const doneTaskCount = taskList.filter((task) => task.isCompleted).length;
+  const totalTaskCount = taskList.length;
+
+  if (doneTaskCount === 0) {
+    return OPEN;
+  }
+  if (doneTaskCount === totalTaskCount) {
+    return DONE;
+  }
+  return IN_PROGRESS;
 }
