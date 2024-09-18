@@ -9,7 +9,7 @@ export const COLORS = {
   },
 
   BORDER: {
-    STANDARD: '#ffffff',
+    STANDARD: '#505050',
     CARD: '#404040',
   },
 };
