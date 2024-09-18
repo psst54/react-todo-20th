@@ -14,7 +14,7 @@ export default function SubjectList({ state }) {
     <Container>
       {state === OPEN && <SubjectInput addSubject={addSubject} />}
       {subjectList.map((subject) => (
-        <Subject subject={subject} />
+        <Subject key={subject.id} subject={subject} />
       ))}
     </Container>
   );
