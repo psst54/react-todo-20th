@@ -1,6 +1,6 @@
 import DeleteIcon from 'assets/DeleteIcon';
-import { Container, Header, Title } from './styles';
 import TaskList from 'components/TaskList';
+import { Container, Header, TaskCount } from './styles';
 
 export default function Subject({ subject, deleteSubject, taskHooks }) {
   function onDelete() {
@@ -10,10 +10,18 @@ export default function Subject({ subject, deleteSubject, taskHooks }) {
     deleteSubject(subject.id);
   }
 
+  const doneTaskCount = subject.taskList.filter(
+    (subject) => subject.isCompleted
+  ).length;
+  const totalTaskCount = subject.taskList.length;
+
   return (
     <Container>
       <Header>
-        <Title>{subject.title}</Title>
+        <h3>
+          {subject.title}{' '}
+          <TaskCount>{`( ${doneTaskCount} / ${totalTaskCount} )`}</TaskCount>
+        </h3>
 
         <button onClick={onDelete}>
           <DeleteIcon />

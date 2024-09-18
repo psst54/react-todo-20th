@@ -1,8 +1,9 @@
 export const COLORS = {
   TEXT: {
     STANDARD: '#ffffff',
+    DARK: '#808080',
+    VERY_DARK: '#000000',
     DANGER: '#ff0000',
-    DARK: '#000000',
   },
 
   BACKGROUND: {
