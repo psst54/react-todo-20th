@@ -48,10 +48,27 @@ export default function useSubject() {
     );
   }
 
+  function toggleTaskInSubject(subjectId, taskId) {
+    setSubjectList(
+      subjectList.map((subject) =>
+        subject.id === subjectId
+          ? {
+              ...subject,
+              taskList: subject.taskList.map((task) =>
+                task.id === taskId
+                  ? { ...task, isCompleted: !task.isCompleted }
+                  : task
+              ),
+            }
+          : subject
+      )
+    );
+  }
+
   return {
     subjectList,
     addSubject,
     deleteSubject,
-    taskHooks: { addTaskToSubject, deleteTaskFromSubject },
+    taskHooks: { addTaskToSubject, deleteTaskFromSubject, toggleTaskInSubject },
   };
 }

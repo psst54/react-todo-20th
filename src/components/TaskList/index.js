@@ -3,7 +3,8 @@ import { Button, Container } from './styles';
 import Task from 'components/Task';
 
 export default function TaskList({ subjectId, taskList, taskHooks }) {
-  const { addTaskToSubject, deleteTaskFromSubject } = taskHooks;
+  const { addTaskToSubject, deleteTaskFromSubject, toggleTaskInSubject } =
+    taskHooks;
 
   return (
     <Container>
@@ -16,6 +17,7 @@ export default function TaskList({ subjectId, taskList, taskHooks }) {
           subjectId={subjectId}
           task={task}
           deleteTaskFromSubject={deleteTaskFromSubject}
+          toggleTaskInSubject={toggleTaskInSubject}
         />
       ))}
     </Container>
