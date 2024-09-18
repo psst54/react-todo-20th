@@ -5,9 +5,3 @@ export const Container = styled.ul`
   flex-direction: column;
   gap: 1rem;
 `;
-
-export const NewSubjectForm = styled.form``;
-
-export const Input = styled.input``;
-
-export const Icon = styled.button``;

@@ -1,3 +1,4 @@
+import { OPEN } from 'components/kanbanBoard/constants';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,6 +10,7 @@ export default function useSubject() {
       id: uuidv4(),
       title: newSubjectTitle,
       taskList: [],
+      state: OPEN,
     };
     setSubjectList([...subjectList, newSubject]);
   }
@@ -17,5 +19,26 @@ export default function useSubject() {
     setSubjectList(subjectList.filter((subject) => subject.id !== subjectId));
   }
 
-  return { subjectList, addSubject, deleteSubject };
+  function addTaskToSubject(subjectId, newTaskTitle) {
+    const newTask = {
+      id: uuidv4(),
+      title: newTaskTitle,
+      isCompleted: false,
+    };
+
+    setSubjectList(
+      subjectList.map((subject) =>
+        subject.id === subjectId
+          ? { ...subject, taskList: [...subject.taskList, newTask] }
+          : subject
+      )
+    );
+  }
+
+  return {
+    subjectList,
+    addSubject,
+    deleteSubject,
+    taskHooks: { addTaskToSubject },
+  };
 }

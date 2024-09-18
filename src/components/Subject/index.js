@@ -1,7 +1,8 @@
 import DeleteIcon from 'assets/DeleteIcon';
 import { Container, Header, Title } from './styles';
+import TaskList from 'components/TaskList';
 
-export default function Subject({ subject, deleteSubject }) {
+export default function Subject({ subject, deleteSubject, taskHooks }) {
   return (
     <Container>
       <Header>
@@ -11,6 +12,12 @@ export default function Subject({ subject, deleteSubject }) {
           <DeleteIcon />
         </button>
       </Header>
+
+      <TaskList
+        subjectId={subject.id}
+        taskList={subject.taskList}
+        taskHooks={taskHooks}
+      />
     </Container>
   );
 }
