@@ -7,12 +7,22 @@ import {
   NewSubjectForm,
   NewSubjectFormWrapper,
 } from './styles';
+import useSubject from 'hooks/useSubject';
 
 export default function SubjectList({ state }) {
-  return <Container>{state === OPEN && <SubjectInput />}</Container>;
+  const { subjectList, addSubject } = useSubject();
+
+  return (
+    <Container>
+      {state === OPEN && <SubjectInput addSubject={addSubject} />}
+      {subjectList.map((subject) => (
+        <div>{subject.title}</div>
+      ))}
+    </Container>
+  );
 }
 
-function SubjectInput() {
+function SubjectInput({ addSubject }) {
   const inputRef = useRef(null);
 
   return (
@@ -20,7 +30,8 @@ function SubjectInput() {
       <NewSubjectForm
         onSubmit={(event) => {
           event.preventDefault();
-          // console.log(inputRef.current.value);
+          addSubject(inputRef.current.value);
+          inputRef.current.value = '';
         }}
       >
         <Input ref={inputRef} />
