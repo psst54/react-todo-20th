@@ -71,42 +71,7 @@ export default function useSubject() {
     };
     const newState = getStateByTaskList(newSubject.taskList);
 
-    if (state !== newState) {
-      // Case #1: subject is moved to another column
-      const newSubjectList = {
-        ...subjectList,
-        [state]: currentSubjectList.filter(
-          (subject) => subject.id !== subjectId
-        ),
-        [newState]: [...subjectList[newState], newSubject],
-      };
-
-      setSubjectList(newSubjectList);
-      localStorage.setItem(KEY, JSON.stringify(newSubjectList));
-
-      return;
-    }
-
-    // Case #2: subject remains in same column
-    const newSubjectList = {
-      ...subjectList,
-      [state]: subjectList[state].map((subject) => {
-        if (subject.id !== subjectId) {
-          return subject;
-        }
-
-        const newTaskList = [...subject.taskList, newTask];
-
-        return {
-          ...subject,
-          taskList: newTaskList,
-          state: getStateByTaskList(newTaskList),
-        };
-      }),
-    };
-
-    setSubjectList(newSubjectList);
-    localStorage.setItem(KEY, JSON.stringify(newSubjectList));
+    toggleSubjectState(state, newState, currentSubjectList, newSubject);
   }
 
   function deleteTaskFromSubject(state, subjectId, taskId) {
@@ -121,44 +86,7 @@ export default function useSubject() {
     };
     const newState = getStateByTaskList(newSubject.taskList);
 
-    if (state !== newState) {
-      // Case #1: subject is moved to another column
-      const newSubjectList = {
-        ...subjectList,
-        [state]: currentSubjectList.filter(
-          (subject) => subject.id !== subjectId
-        ),
-        [newState]: [...subjectList[newState], newSubject],
-      };
-
-      setSubjectList(newSubjectList);
-      localStorage.setItem(KEY, JSON.stringify(newSubjectList));
-
-      return;
-    }
-
-    // Case #2: subject remains in same column
-    const newSubjectList = {
-      ...subjectList,
-      [state]: subjectList[state].map((subject) => {
-        if (subject.id !== subjectId) {
-          return subject;
-        }
-
-        const newTaskList = subject.taskList.filter(
-          (task) => task.id !== taskId
-        );
-
-        return {
-          ...subject,
-          taskList: newTaskList,
-          state: getStateByTaskList(newTaskList),
-        };
-      }),
-    };
-
-    setSubjectList(newSubjectList);
-    localStorage.setItem(KEY, JSON.stringify(newSubjectList));
+    toggleSubjectState(state, newState, currentSubjectList, newSubject);
   }
 
   function toggleTaskInSubject(state, subjectId, taskId) {
@@ -175,13 +103,24 @@ export default function useSubject() {
     };
     const newState = getStateByTaskList(newSubject.taskList);
 
+    toggleSubjectState(state, newState, currentSubjectList, newSubject);
+  }
+
+  function toggleSubjectState(
+    state,
+    newState,
+    currentSubjectList,
+    newSubject,
+    subjectId
+  ) {
     if (state !== newState) {
       // Case #1: subject is moved to another column
       const newSubjectList = {
         ...subjectList,
+        // remove target subject
         [state]: currentSubjectList.filter(
-          (subject) => subject.id !== subjectId
-        ),
+          (subject) => subject.id !== newSubject.id
+        ), // add target subject
         [newState]: [...subjectList[newState], newSubject],
       };
 
@@ -194,23 +133,9 @@ export default function useSubject() {
     // Case #2: subject remains in same column
     const newSubjectList = {
       ...subjectList,
-      [state]: subjectList[state].map((subject) => {
-        if (subject.id !== subjectId) {
-          return subject;
-        }
-
-        const newTaskList = subject.taskList.map((task) =>
-          task.id === taskId
-            ? { ...task, isCompleted: !task.isCompleted }
-            : task
-        );
-
-        return {
-          ...subject,
-          taskList: newTaskList,
-          state: getStateByTaskList(newTaskList),
-        };
-      }),
+      [state]: subjectList[state].map((subject) =>
+        subject.id !== subjectId ? { ...subject } : newSubject
+      ),
     };
 
     setSubjectList(newSubjectList);
