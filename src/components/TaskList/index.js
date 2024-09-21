@@ -14,6 +14,7 @@ export default function TaskList({ subjectId, taskList, taskHooks }) {
 
       {taskList.map((task) => (
         <Task
+          key={task.id}
           subjectId={subjectId}
           task={task}
           deleteTaskFromSubject={deleteTaskFromSubject}

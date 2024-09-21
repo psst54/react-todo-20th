@@ -2,8 +2,20 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DONE, IN_PROGRESS, OPEN } from 'components/kanbanBoard/constants';
 
+const KEY = 'subjectList';
+
 export default function useSubject() {
-  const [subjectList, setSubjectList] = useState([]);
+  const [subjectList, setSubjectList] = useState(getPreviousData);
+
+  function getPreviousData() {
+    const data = localStorage.getItem(KEY);
+
+    if (!data) {
+      return [];
+    }
+
+    return JSON.parse(data);
+  }
 
   function addSubject(newSubjectTitle) {
     const newSubject = {
@@ -12,11 +24,21 @@ export default function useSubject() {
       taskList: [],
       state: OPEN,
     };
-    setSubjectList([...subjectList, newSubject]);
+
+    const newSubjectList = [...subjectList, newSubject];
+    console.log(localStorage.getItem(KEY));
+
+    setSubjectList(newSubjectList);
+    localStorage.setItem(KEY, JSON.stringify(newSubjectList));
   }
 
   function deleteSubject(subjectId) {
-    setSubjectList(subjectList.filter((subject) => subject.id !== subjectId));
+    const newSubjectList = subjectList.filter(
+      (subject) => subject.id !== subjectId
+    );
+
+    setSubjectList(newSubjectList);
+    localStorage.setItem(KEY, JSON.stringify(newSubjectList));
   }
 
   function addTaskToSubject(subjectId, newTaskTitle) {
@@ -26,63 +48,62 @@ export default function useSubject() {
       isCompleted: false,
     };
 
-    setSubjectList(
-      subjectList.map((subject) => {
-        if (subject.id !== subjectId) {
-          return subject;
-        }
+    const newSubjectList = subjectList.map((subject) => {
+      if (subject.id !== subjectId) {
+        return subject;
+      }
 
-        const newTaskList = [...subject.taskList, newTask];
+      const newTaskList = [...subject.taskList, newTask];
 
-        return {
-          ...subject,
-          taskList: newTaskList,
-          state: getStateByTaskList(newTaskList),
-        };
-      })
-    );
+      return {
+        ...subject,
+        taskList: newTaskList,
+        state: getStateByTaskList(newTaskList),
+      };
+    });
+
+    setSubjectList(newSubjectList);
+    localStorage.setItem(KEY, JSON.stringify(newSubjectList));
   }
 
   function deleteTaskFromSubject(subjectId, taskId) {
-    setSubjectList((subjectList) =>
-      subjectList.map((subject) => {
-        if (subject.id !== subjectId) {
-          return subject;
-        }
+    const newSubjectList = subjectList.map((subject) => {
+      if (subject.id !== subjectId) {
+        return subject;
+      }
 
-        const newTaskList = subject.taskList.filter(
-          (task) => task.id !== taskId
-        );
+      const newTaskList = subject.taskList.filter((task) => task.id !== taskId);
 
-        return {
-          ...subject,
-          taskList: newTaskList,
-          state: getStateByTaskList(newTaskList),
-        };
-      })
-    );
+      return {
+        ...subject,
+        taskList: newTaskList,
+        state: getStateByTaskList(newTaskList),
+      };
+    });
+
+    setSubjectList(newSubjectList);
+    localStorage.setItem(KEY, JSON.stringify(newSubjectList));
   }
 
   function toggleTaskInSubject(subjectId, taskId) {
-    setSubjectList(
-      subjectList.map((subject) => {
-        if (subject.id !== subjectId) {
-          return subject;
-        }
+    const newSubjectList = subjectList.map((subject) => {
+      if (subject.id !== subjectId) {
+        return subject;
+      }
 
-        const newTaskList = subject.taskList.map((task) =>
-          task.id === taskId
-            ? { ...task, isCompleted: !task.isCompleted }
-            : task
-        );
+      const newTaskList = subject.taskList.map((task) =>
+        task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+      );
 
-        return {
-          ...subject,
-          taskList: newTaskList,
-          state: getStateByTaskList(newTaskList),
-        };
-      })
-    );
+      return {
+        ...subject,
+        taskList: newTaskList,
+        state: getStateByTaskList(newTaskList),
+      };
+    });
+
+    setSubjectList(newSubjectList);
+    localStorage.setItem(KEY, JSON.stringify(newSubjectList));
   }
 
   return {
