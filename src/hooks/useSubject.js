@@ -110,7 +110,9 @@ export default function useSubject() {
     subjectList,
     addSubject,
     deleteSubject,
-    taskHooks: { addTaskToSubject, deleteTaskFromSubject, toggleTaskInSubject },
+    addTaskToSubject,
+    deleteTaskFromSubject,
+    toggleTaskInSubject,
   };
 }
 

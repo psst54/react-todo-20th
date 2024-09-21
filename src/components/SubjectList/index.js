@@ -7,7 +7,7 @@ import { Container } from './styles';
 import { Container as SubjectContainer } from 'components/Subject/styles';
 
 export default function SubjectList({ state, subjectHooks }) {
-  const { subjectList, addSubject, deleteSubject, taskHooks } = subjectHooks;
+  const { subjectList, addSubject, deleteSubject, ...taskHooks } = subjectHooks;
 
   return (
     <Container>
