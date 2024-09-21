@@ -2,26 +2,25 @@ import { useRef } from 'react';
 
 import { OPEN } from 'components/kanbanBoard/constants';
 import Subject from 'components/Subject';
-import AddIcon from 'assets/AddIcon';
-import { Container } from './styles';
 import { Container as SubjectContainer } from 'components/Subject/styles';
+import { Container } from './styles';
+import AddIcon from 'assets/AddIcon';
 
 export default function SubjectList({ state, subjectHooks }) {
-  const { subjectList, addSubject, deleteSubject, taskHooks } = subjectHooks;
+  const { subjectList, addSubject, deleteSubject, ...taskHooks } = subjectHooks;
 
   return (
     <Container>
       {state === OPEN && <SubjectInput addSubject={addSubject} />}
-      {subjectList
-        .filter((subject) => state === subject.state)
-        .map((subject) => (
-          <Subject
-            key={subject.id}
-            subject={subject}
-            deleteSubject={deleteSubject}
-            taskHooks={taskHooks}
-          />
-        ))}
+      {subjectList[state].map((subject) => (
+        <Subject
+          key={subject.id}
+          state={state}
+          subject={subject}
+          deleteSubject={deleteSubject}
+          taskHooks={taskHooks}
+        />
+      ))}
     </Container>
   );
 }

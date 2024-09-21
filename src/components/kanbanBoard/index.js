@@ -24,9 +24,7 @@ export default function KanbanBoard() {
 function Column({ state, subjectHooks }) {
   const { id, title } = STATE_LIST[state];
   const { subjectList } = subjectHooks;
-  const subjectCount = subjectList.filter(
-    (subject) => subject.state === state
-  ).length;
+  const subjectCount = subjectList[state].length;
 
   return (
     <ColumnContainer id={`${id}-column`} state={state}>
