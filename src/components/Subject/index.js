@@ -2,12 +2,12 @@ import DeleteIcon from 'assets/DeleteIcon';
 import TaskList from 'components/TaskList';
 import { Container, Header, TaskCount } from './styles';
 
-export default function Subject({ subject, deleteSubject, taskHooks }) {
+export default function Subject({ state, subject, deleteSubject, taskHooks }) {
   function onDelete() {
     if (!window.confirm('정말로 삭제하시겠습니까?')) {
       return;
     }
-    deleteSubject(subject.id);
+    deleteSubject(state, subject.id);
   }
 
   const doneTaskCount = subject.taskList.filter(
@@ -29,6 +29,7 @@ export default function Subject({ subject, deleteSubject, taskHooks }) {
       </Header>
 
       <TaskList
+        state={state}
         subjectId={subject.id}
         taskList={subject.taskList}
         taskHooks={taskHooks}

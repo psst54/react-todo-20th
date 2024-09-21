@@ -2,19 +2,24 @@ import { useRef } from 'react';
 import { Button, Container } from './styles';
 import Task from 'components/Task';
 
-export default function TaskList({ subjectId, taskList, taskHooks }) {
+export default function TaskList({ state, subjectId, taskList, taskHooks }) {
   const { addTaskToSubject, deleteTaskFromSubject, toggleTaskInSubject } =
     taskHooks;
 
   return (
     <Container>
       <li>
-        <TaskInput subjectId={subjectId} addTaskToSubject={addTaskToSubject} />
+        <TaskInput
+          state={state}
+          subjectId={subjectId}
+          addTaskToSubject={addTaskToSubject}
+        />
       </li>
 
       {taskList.map((task) => (
         <Task
           key={task.id}
+          state={state}
           subjectId={subjectId}
           task={task}
           deleteTaskFromSubject={deleteTaskFromSubject}
@@ -25,7 +30,7 @@ export default function TaskList({ subjectId, taskList, taskHooks }) {
   );
 }
 
-function TaskInput({ subjectId, addTaskToSubject }) {
+function TaskInput({ state, subjectId, addTaskToSubject }) {
   const inputRef = useRef(null);
 
   function onAdd(event) {
@@ -34,7 +39,7 @@ function TaskInput({ subjectId, addTaskToSubject }) {
       alert('할 일을 입력해주세요!');
       return;
     }
-    addTaskToSubject(subjectId, inputRef.current.value);
+    addTaskToSubject(state, subjectId, inputRef.current.value);
     inputRef.current.value = '';
   }
 
