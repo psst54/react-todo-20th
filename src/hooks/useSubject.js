@@ -71,7 +71,13 @@ export default function useSubject() {
     };
     const newState = getStateByTaskList(newSubject.taskList);
 
-    toggleSubjectState(state, newState, currentSubjectList, newSubject);
+    toggleSubjectState(
+      state,
+      newState,
+      currentSubjectList,
+      newSubject,
+      subjectId
+    );
   }
 
   function deleteTaskFromSubject(state, subjectId, taskId) {
@@ -86,7 +92,13 @@ export default function useSubject() {
     };
     const newState = getStateByTaskList(newSubject.taskList);
 
-    toggleSubjectState(state, newState, currentSubjectList, newSubject);
+    toggleSubjectState(
+      state,
+      newState,
+      currentSubjectList,
+      newSubject,
+      subjectId
+    );
   }
 
   function toggleTaskInSubject(state, subjectId, taskId) {
@@ -103,7 +115,13 @@ export default function useSubject() {
     };
     const newState = getStateByTaskList(newSubject.taskList);
 
-    toggleSubjectState(state, newState, currentSubjectList, newSubject);
+    toggleSubjectState(
+      state,
+      newState,
+      currentSubjectList,
+      newSubject,
+      subjectId
+    );
   }
 
   function toggleSubjectState(
@@ -134,7 +152,7 @@ export default function useSubject() {
     const newSubjectList = {
       ...subjectList,
       [state]: subjectList[state].map((subject) =>
-        subject.id === subjectId ? { ...subject } : newSubject
+        subject.id !== subjectId ? subject : newSubject
       ),
     };
 
