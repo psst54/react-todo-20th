@@ -134,7 +134,7 @@ export default function useSubject() {
     const newSubjectList = {
       ...subjectList,
       [state]: subjectList[state].map((subject) =>
-        subject.id !== subjectId ? { ...subject } : newSubject
+        subject.id === subjectId ? { ...subject } : newSubject
       ),
     };
 
